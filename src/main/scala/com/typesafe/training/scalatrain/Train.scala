@@ -17,6 +17,8 @@ case class Train(info: TrainInfo, schedule: Seq[(Time, Station)]) {
     val stations = schedule.map(_._2)
     stations.zip(stations.tail)
   }
+
+  val departureTimes: Map[Station, Time] = schedule.map { case (time, station) => station -> time }.toMap
 }
 
 object TrainInfo {
