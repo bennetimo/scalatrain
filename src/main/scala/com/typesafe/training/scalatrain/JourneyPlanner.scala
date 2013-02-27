@@ -26,4 +26,6 @@ class JourneyPlanner(trains: Set[Train]) {
         case _ => false
       }
     )
+
+  //def connections()
 }

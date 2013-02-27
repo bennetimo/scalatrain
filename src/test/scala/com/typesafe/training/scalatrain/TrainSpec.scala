@@ -26,4 +26,25 @@ class TrainSpec extends WordSpec with MustMatchers {
       Ice724.stations must be === Vector(Munich, Nuremberg, Frankfurt, Cologne)
     }
   }
+
+  "backToBackStations" should {
+    "return (a,b),(b,c) for a->b->c" in {
+      val train = Train(TrainInfo.InterCityExpress(724), Vector(Time(12, 0) -> Munich,
+        Time(12, 30) -> Nuremberg,
+        Time(12, 40) -> Frankfurt))
+      train.backToBackStations must be === Vector(Munich -> Nuremberg, Nuremberg -> Frankfurt)
+    }
+    "return (a,b) for a->b" in {
+      val train = Train(TrainInfo.InterCityExpress(724), Vector(Time(12, 0) -> Munich,
+        Time(12, 30) -> Nuremberg))
+      train.backToBackStations must be === Vector(Munich -> Nuremberg)
+    }
+    "return (a,b),(b,c),(c,d) for a->b->c->d" in {
+      val train = Train(TrainInfo.InterCityExpress(724), Vector(Time(12, 0) -> Munich,
+        Time(12, 30) -> Nuremberg,
+        Time(12, 40) -> Frankfurt,
+        Time(12, 50) -> Cologne))
+      train.backToBackStations must be === Vector(Munich -> Nuremberg, Nuremberg -> Frankfurt, Frankfurt -> Cologne)
+    }
+  }
 }

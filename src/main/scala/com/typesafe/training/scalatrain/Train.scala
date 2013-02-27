@@ -12,6 +12,11 @@ case class Train(info: TrainInfo, schedule: Seq[(Time, Station)]) {
 
   val stations: Seq[Station] =
     schedule map (_._2)
+
+  val backToBackStations: Seq[(Station, Station)] = {
+    val stations = schedule.map(_._2)
+    stations.zip(stations.tail)
+  }
 }
 
 object TrainInfo {
