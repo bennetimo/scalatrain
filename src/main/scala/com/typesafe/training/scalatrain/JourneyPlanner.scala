@@ -10,10 +10,15 @@ class JourneyPlanner(trains: Set[Train]) {
     trains flatMap (_.stations)
 
   val hops: Map[Station, Set[Hop]] = {
-    val allHops = trains.flatMap(train => train.backToBackStations.map {
-      case (from, to) => Hop(from, to, train)
-    })
-    allHops.groupBy(hop => hop.from)
+    //    val allHops = trains.flatMap(train => train.backToBackStations.map {
+    //      case (from, to) => Hop(from, to, train)
+    //    })
+
+    val allHops = for {
+      train <- trains
+      (from, to) <- train.backToBackStations
+    } yield Hop(from, to, train)
+    allHops.groupBy(_.from)
   }
 
   def trainsAt(station: Station): Set[Train] =
