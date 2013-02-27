@@ -33,6 +33,11 @@ object Time {
     case t1 +: t2 +: rest => (t1 < t2) && isIncreasing(t2 +: rest)
     case _ => true
   }
+
+  def isIncreasingSliding(times: Seq[Time]): Boolean = times.sliding(2).forall {
+    case Seq(first, second) => first < second
+    case Seq(_) => true
+  }
 }
 
 case class Time(hours: Int = 0, minutes: Int = 0) extends Ordered[Time] {
