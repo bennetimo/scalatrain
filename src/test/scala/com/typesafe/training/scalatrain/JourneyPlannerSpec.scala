@@ -42,4 +42,10 @@ class JourneyPlannerSpec extends WordSpec with MustMatchers {
       Planner.isShortTrip(Nuremberg, Essen) must be(true)
     }
   }
+
+  "Calling hops" should {
+    "return all of the hops from the departure station" in {
+      Planner.hops(Frankfurt) must be === Set(Hop(Frankfurt, Cologne, Ice724), Hop(Frankfurt, Essen, Ice726))
+    }
+  }
 }
