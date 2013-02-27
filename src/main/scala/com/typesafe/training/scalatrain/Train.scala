@@ -18,7 +18,14 @@ case class Train(info: TrainInfo, schedule: Seq[(Time, Station)]) {
     stations.zip(stations.tail)
   }
 
-  val departureTimes: Map[Station, Time] = schedule.map { case (time, station) => station -> time }.toMap
+  /**
+   * In both of the commented out cases we will traverse the sequence twice, once to do the map, and again when
+   * we call toMap. To be more efficient we can use the uncommented case, to provide the breakout and do it in
+   * one pass. See http://stackoverflow.com/questions/1715681/scala-2-8-breakout
+   */
+  //val departureTimes: Map[Station, Time] = schedule.map { case (time, station) => station -> time }.toMap
+  //val departureTimes: Map[Station, Time] = schedule.map(_.swap).toMap
+  val departureTimes: Map[Station, Time] = schedule.map { case (time, station) => station -> time }(scala.collection.breakOut)
 }
 
 object TrainInfo {
