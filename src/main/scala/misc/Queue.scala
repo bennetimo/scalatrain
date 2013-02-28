@@ -15,6 +15,8 @@ class Queue[+A] private (private val as: Seq[A]) {
     case head +: rest => head -> Queue(rest: _*)
   }
 
+  def enqueue[B >: A](elem: B): Queue[B] = new Queue(elem +: as)
+
   override def equals(other: Any): Boolean =
     other match {
       case that: Queue[_] => (this eq that) || (this.as == that.as)

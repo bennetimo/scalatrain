@@ -41,4 +41,16 @@ class QueueSpec extends Specification {
       Queue(1, 2, 3).dequeue ==== (1, Queue(2, 3))
     }
   }
+
+  "Calling enqueue" should {
+    "return a queue of one on an empty queue" in {
+      Queue().enqueue(3) ==== Queue(3)
+    }
+    "put new element on the queue" in {
+      Queue(2, 1).enqueue(3) ==== Queue(3, 2, 1)
+    }
+    "after a dequeue results in the expected queue" in {
+      Queue(1, 2, 3).dequeue._2.enqueue(3) ==== Queue(3, 2, 3)
+    }
+  }
 }
