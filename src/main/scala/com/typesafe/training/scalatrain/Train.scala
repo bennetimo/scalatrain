@@ -43,3 +43,7 @@ sealed abstract class TrainInfo {
 }
 
 case class Station(name: String)
+
+object Station {
+  implicit def fromString(stationName: String) = Station(stationName)
+}
