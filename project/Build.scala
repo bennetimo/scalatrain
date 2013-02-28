@@ -24,7 +24,8 @@ object Build extends Build {
         ),
         libraryDependencies ++= Seq(
           "org.scalatest" %% "scalatest" % "2.0.M5b" % "test",
-          "org.scalamock" %% "scalamock-scalatest-support" % "3.0.1" % "test"
+          "org.scalamock" %% "scalamock-scalatest-support" % "3.0.1" % "test",
+          "org.specs2" %% "specs2" % "1.14" % "test"
         ),
         retrieveManaged := true,
         initialCommands in console := "import com.typesafe.training.scalatrain._,misc._",
