@@ -25,6 +25,11 @@ val l1: List[Nothing] = List()  //List nothing
 val l2 = 1 :: l1            //Widened to List[Int]
 val l3 = "hello" :: l2      //Widened to List[Any]
 
+import misc.Equal._
+
+//1 === "1" //Doesn't compile
+1 === 1
+
 
 
 
