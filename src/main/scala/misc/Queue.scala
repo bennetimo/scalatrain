@@ -8,7 +8,7 @@ object Queue {
     new Queue(as.toVector)
 }
 
-class Queue[A] private (private val as: Seq[A]) {
+class Queue[+A] private (private val as: Seq[A]) {
 
   def dequeue(): Tuple2[A, Queue[A]] = as match {
     case Seq() => throw new NoSuchElementException
