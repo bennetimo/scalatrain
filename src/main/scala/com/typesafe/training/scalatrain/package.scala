@@ -5,7 +5,7 @@ import annotation.tailrec
 package object scalatrain {
 
   @tailrec
-  def isIncreasing[A <: Ordered[A]](times: Seq[A]): Boolean = times match {
+  def isIncreasing[A <% Ordered[A]](times: Seq[A]): Boolean = times match {
     //case t1 :: t2 :: rest => (t1 < t2) && isIncreasing(t2 :: rest)
     /**
      * The first case example above will pass all the unit tests, as they are written to pass in Seqs and Lists. However,

@@ -6,11 +6,13 @@ package misc
 
 // Animal
 
+import com.typesafe.training.scalatrain._
+
 abstract class Animal {
 
   def name: String
 
-  def eat(food: SuitableFood): this.type =
+  def eat(food: SuitableFood)(implicit e: food.type =!= this.type): this.type =
     this
 
   type SuitableFood <: Food
@@ -57,11 +59,11 @@ object FeedingAnimals {
     val dori = Fish("Dori")
     val nemo = Fish("Nemo")
     dori eat nemo
-    dori eat dori
+    //dori eat dori //Won't compile, you can't eat yourself!
 
     val cindy = Cow("Cindy")
     cindy eat Grass
-    //    cindy eat Grains // Shouldn't compile
+    //cindy eat Grains // Shouldn't compile
 
     val freddy = Fish("Freddy")
     freddy eat Fish("Frodo") eat Fish("Franky")
