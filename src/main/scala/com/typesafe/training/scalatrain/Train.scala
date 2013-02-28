@@ -8,7 +8,7 @@ import scala.collection.immutable.Seq
 
 case class Train(info: TrainInfo, schedule: Seq[(Time, Station)]) {
   require(schedule.size >= 2, "schedule must contain at least two elements")
-  require(Time.isIncreasing(schedule.map(_._1)), "schedule must contain increasing times")
+  require(isIncreasing(schedule.map(_._1)), "schedule must contain increasing times")
 
   val stations: Seq[Station] =
     schedule map (_._2)
