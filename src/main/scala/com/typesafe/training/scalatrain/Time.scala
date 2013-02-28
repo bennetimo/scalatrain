@@ -27,6 +27,11 @@ case class Time(hours: Int = 0, minutes: Int = 0) extends Ordered[Time] {
   require(hours >= 0 && hours < 24, "hours must be within 0 and 23")
   require(minutes >= 0 && minutes < 60, "minutes must be within 0 and 59")
 
+  type Closeable = { def close(): Unit }
+  val c1: Closeable = new java.io.StringWriter
+
+  def test(c: Closeable) = {}
+
   val asMinutes: Int =
     hours * 60 + minutes
 
