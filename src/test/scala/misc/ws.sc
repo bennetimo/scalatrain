@@ -29,6 +29,7 @@ import misc.Equal._
 
 //1 === "1" //Doesn't compile
 1 === 1
+"1" === "1"
 
 
 
