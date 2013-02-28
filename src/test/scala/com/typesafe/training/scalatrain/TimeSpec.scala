@@ -72,4 +72,16 @@ class TimeSpec extends WordSpec with MustMatchers {
     }
   }
 
+  "Creating a Time" should {
+    "be possible from a string" in {
+      val t: Time = "12:45"
+      t.getClass must be === classOf[Time]
+    }
+    "should allow subtracting times" in {
+      import com.typesafe.training.scalatrain.Time._
+      "13:15" - "13:00" must be === 15
+
+    }
+  }
+
 }

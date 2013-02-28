@@ -21,6 +21,12 @@ object Time {
       minutes <- Exception.allCatch opt minutesAny.toString.toInt
     } yield Time(hours, minutes)
 
+  implicit def fromString(time: String): Time = {
+    val regex = """(\d{1,2}):(\d{1,2})""".r
+    val regex(hours, mins) = time
+    Time(hours.toInt, mins.toInt)
+  }
+
 }
 
 case class Time(hours: Int = 0, minutes: Int = 0) extends Ordered[Time] {
