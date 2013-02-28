@@ -38,4 +38,23 @@ class JourneyPlanner(trains: Set[Train]) {
         case _ => false
       }
     )
+
+  def connections(from: Station, to: Station, departureTime: Time): Set[Seq[Hop]] = {
+    require(from != to, "from must not be the same station as to")
+
+    def connections(soFar: Vector[Hop]): Set[Seq[Hop]] = {
+      if (soFar.last.to == to)
+        Set(soFar)
+      else {
+        val soFarStations = soFar.head.from +: soFar.map(_.to)
+
+        val possibleHops = hops.getOrElse(soFarStations.last, Set()) filter { hop => hop.departureTime >= soFar.last.arrivalTime && !(soFarStations contains hop.to) }
+
+        possibleHops flatMap (hop => connections(soFar :+ hop))
+      }
+    }
+    val possibleHops = hops.getOrElse(from, Set()) filter { hop => hop.departureTime >= departureTime }
+    possibleHops.flatMap(hop => connections(Vector(hop)))
+  }
+
 }
