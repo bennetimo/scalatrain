@@ -11,6 +11,8 @@ import scala.util.parsing.json.JSONObject
 
 class TimeSpec extends WordSpec with MustMatchers {
 
+  import com.typesafe.training.scalatrain.Time._
+
   "Calling fromJSON" should {
     "return None for an invalid JSONOject" in {
       Time fromJSON JSONObject(Map()) must be(None)

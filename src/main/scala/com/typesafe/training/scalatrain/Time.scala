@@ -5,21 +5,27 @@
 package com.typesafe.training.scalatrain
 
 import scala.util.control.Exception
-import scala.util.parsing.json.{ JSON, JSONObject }
-import annotation.tailrec
+import scala.util.parsing.json.{ JSONObject }
+import misc.{ JSONFormat, JSONSerializable }
 
-object Time {
+object Time extends JSONSerializable[Time] {
+
+  implicit val timeJSONFormat: JSONFormat[Time] = new JSONFormat[Time] {
+
+    def fromJSON(json: JSONObject): Option[Time] =
+      for {
+        hoursAny <- json.obj get "hours"
+        hours <- Exception.allCatch opt hoursAny.toString.toInt
+        minutesAny <- json.obj get "minutes"
+        minutes <- Exception.allCatch opt minutesAny.toString.toInt
+      } yield Time(hours, minutes)
+
+    def toJSON(time: Time): JSONObject = JSONObject(Map("hours" -> time.hours, "minutes" -> time.minutes))
+
+  }
 
   def fromMinutes(minutes: Int): Time =
     Time(minutes / 60, minutes % 60)
-
-  def fromJSON(json: JSONObject): Option[Time] =
-    for {
-      hoursAny <- json.obj get "hours"
-      hours <- Exception.allCatch opt hoursAny.toString.toInt
-      minutesAny <- json.obj get "minutes"
-      minutes <- Exception.allCatch opt minutesAny.toString.toInt
-    } yield Time(hours, minutes)
 
   implicit def fromString(time: String): Time = {
     val regex = """(\d{1,2}):(\d{1,2})""".r
@@ -49,10 +55,6 @@ case class Time(hours: Int = 0, minutes: Int = 0) extends Ordered[Time] {
 
   def -(that: Time): Int =
     minus(that)
-
-  // TODO This "pollutes" the API; in the Advanced Scala course we learn a better solution
-  def toJSON: JSONObject =
-    JSONObject(Map("hours" -> hours, "minutes" -> minutes))
 
   override def compare(that: Time): Int =
     this - that
